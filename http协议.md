@@ -57,6 +57,19 @@
     安全 机房和外部
     外网发布 外网vps开nginx起反向代理，代理到本地服务node端口。
     实例：ping百度。
++ nginx配置(开启node nginx，然后配置nginx)
+    worker_processes 工作进程 cpu数量
+    worker_connections 
+    ssl_session_cache: https
+    ssh root@192.1231
+    upstream web_crm（名字） { // 代理应用
+        server 127.0.0.1:8090;
+    }
+    location /crm/(请求url路径) {
+        proxy_pass http://web_crm_crm/crm(端口下路径);
+    }
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
 
 
 
