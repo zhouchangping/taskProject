@@ -116,8 +116,34 @@ Function.__proto__ = Function.prototype;
 Function.prototype.__proto__ = Object.prototype;
 ```
 + 5.请写出你了解的ES6元编程。（10分）
+> 1、就是对原有的JS进行编程（比如改写JS中一些方法），就称为元编程（源头）
+可以通过代理属性来进行元编程new Proxy(原数据,{set()})，通过set监测取值时然后改变原先的JS方法
+2、通过[Symbol.iterator](){代码} 接口遍历器实现改写方法，拦截原有的方法进行改写
+3、通过reflect-metadata插件库，一个真正的元编程库，目前Reflect这个方法还没完全实现，但这个库已经实现的很好了
 ```
-
+const arr = [4,5,6,7,8];
+// 元编程-改变原有方法
+arr[Symbol.iterator] = function *(){
+let idx = 1;
+do{// yield声明做为接口,供for.of使用在v中读取出来
+yield this[idx]; // 取数组[1]
+}while(
+(idx+=2)<this.length // 在取自身值在+2,并且不能大于自身数组长度
+)
+}
+// 此时js方法循环读取出来的值被改变了
+for (const v of arr) {
+console.log(v); // 输出 5 7
+}
+```
+```
+function test(){}
+test.call(this);
+Reflect.call(test,this);
+// 扩展一些JS的方法
+Reflect.metadata('zzz',function(){})
+// 然后通过这种方式调用那个方法
+Reflect.getMetadata('zzz')
 ```
 + 6.请按照下方要求作答？(15分)
 ```
