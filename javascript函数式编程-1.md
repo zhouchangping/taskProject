@@ -26,9 +26,52 @@ class Category {
 }
 ```
 + 范畴和函数式编程关系（范畴论使用函数，表达范畴之间的关系。）
-：    在函数式编程中，函数就是一个管道（pipe）。这头进去一个值，那头就会出来一个新的值，没有其他作用。
+>    在函数式编程中，函数就是一个管道（pipe）。这头进去一个值，那头就会出来一个新的值，没有其他作用。
++ react高阶组件带动函数式编程火。
++ 函数式第一等公民
++ 不可改变量。变量在函数式编程中也被函数代替了。
++ map和reduce是最常用的函数式编程的方法。
++ 没有副作用
++ 只用表达式，不用语句
++ 引用透明，函数运行只靠参数。
++ 纯函数 Array.slice，没有副作用，对于固定的输入，总是固定输出。splice不是，修改了数组。除了参数，没有外部其他参数。
+```
+loadsh.js
+_.memorize
+_.curry()
+_.values()
+```
++ 幂等性 执行无数次，还具有相同效果。
++ poniter free
+>  let ceos = companines.map(c=>c.ce0);
+var toupperCase = word => word.toUpperCase();
+var split = x => (str=>str.split(x))'灵活组合，暴露出内部的。jquery。
++ 命令式代码；
++ **声明式代码**，不需要知道内部细节。例如map;
++ 惰性求值 ajax xhr;
++ 高阶函数 一等公民 函数作为参数 内部放回封装的函数作为结果。
++ es6中尾递归，函数扩展章节
++ 尾调用自身，就称为尾递归。尾调用优化。尾递归优化。
+```
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+
+factorial(5) // 120
+```
+```
+function factorial(n, total) {
+  if (n === 1) return total;
+  return factorial(n - 1, n * total);
+}
+factorial(5, 1) // 120
+```
++ 闭包
++ 爆栈和死循环。前者会报错,占内存，卡浏览器。后者，占用主js线程。
+
 ### 函数的合成与柯里化
-范畴
+合成
 :   定义：如果一个值要经过多个函数，才能变成另外一个值，就可以把所有中间步骤合并成一个函数，这叫做"函数的合成"（compose）。
 函数的合成还必须满足结合律
 ```
@@ -56,11 +99,11 @@ function addX(y) {
 }
 addX(2)(1);
 ```
-### 函子
+### 函子（Functor类）,map变形关系，值，容器转化成另一个容器的能力。特殊的容器，具有map,转化为另一个容器的能力。
 概念
-:   函数不仅可以用于同一个范畴之中值的转换，还可以用于将一个范畴转成另一个范畴。这就涉及到了函子（Functor）。它首先是一种范畴，也就是说，是一个容器，包含了值和变形关系。比较特殊的是，它的变形关系可以依次作用于每一个值，将当前容器变形成另一个容器。
+:   函数不仅可以用于同一个范畴之中值的转换，还可以用于将一个范畴转成另一个范畴。这就涉及到了函子（Functor）。它首先是一种范畴，也就是说，是一个容器，包含了值和变形关系。比较特殊的是，**它的变形关系可以依次作用于每一个值，将当前容器变形成另一个容器。**
 ![函子图](http://www.ruanyifeng.com/blogimg/asset/2017/bg2017022203.png)
-:    上图中，左侧的圆圈就是一个函子，表示人名的范畴。外部传入函数f，会转成右边表示早餐的范畴。
+:    上图中，左侧的圆圈就是一个函子，表示人名的范畴。**外部传入函数f**，会转成右边表示早餐的范畴。
 
 + 函子代码实现。任何具有map方法的数据结构，都可以当作函子的实现。
 
@@ -76,7 +119,7 @@ class Functor {
 ```
 ```
 (new Functor(2).map(function (tow) {
-    return tow + 2;
+    return tow + 2; // map返回的还是个函子。可接受纯函数。
 }
 
 (new Functor('flame')).map(function (s) {
@@ -97,7 +140,7 @@ Functor.of = function (val) {
 }
 
 // 上面函数改写
-Functor.of(2).map(function (tow) {
+Functor.of(2).map(function (tow) { // Functor类的静态方法of.
     return tow + 2;
 }
 ```
@@ -109,7 +152,7 @@ Functor.of(null).map(function (s) {
     return s.toUpperCase();
 });
 
-class maybe extends Functor {
+class Maybe extends Functor {
     map(f) {
         return this.val ? Maybe.of(f(this.val)) : Maybe.of(null);
     }
@@ -232,6 +275,24 @@ readFile('./user.txt').flatMap(tail).flatMap(print);
 readFile('./user.txt').chain(tail).chain(print);
 上面代码读取了文件user.txt，然后选取最后一行输出。
 ```
+
+### RXJS (FRP,函数式响应式编程）流
++ 异步队列 vue
++ zong rxjs aguluar.js
++ 转化为流。类似then
++ 现在浏览器observer promise流，
+
+
+### cycle.jsz（流式的react)
+
+### underscore.js（函数式编程)
+> self.self = self; window.self == self;
+
+### randajs
+### loadsh.js
+
+
+
 
 
 
