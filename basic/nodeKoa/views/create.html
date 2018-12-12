@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}zhenjaia{% endblock %}
+{% block content %}
+<form>
+	 <label for="name"></label>
+	 <input type="text" name="name">
+	 <input type="button" value="tijiao">
+  </form>
+  <div id="btn">123</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="module">
+	console.log($);
+	import Create from "/scripts/index.js";
+	const a = new Create();
+	a.init();
+</script>
+<script src="https://cdn.bootcss.com/systemjs/2.1.1/system.js"></script>
+<script nomodule type="text/javascript">
+	System.import("/scripts/index.js").then(function (_) {
+		var s = new _.default();
+		s.init();
+	});
+</script>
+
+{% endblock %}
