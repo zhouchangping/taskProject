@@ -28,5 +28,5 @@ install:
  - npm install
 
 # 执行命令脚本
-script:
+#script:
 
