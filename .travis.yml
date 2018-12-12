@@ -11,22 +11,5 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_0d9a59502154_key -iv $encrypted_0d9a59502154_iv
   -in id_rsa.enc -out id_rsa -d
 
-# 改变文件权限
- - chmod 600 ~/.ssh/id_rsa
 
-# 配置 ssh
- - eval $(ssh-agent)
- - ssh-add ~/.ssh/id_rsa
- - cp .travis/ssh_config ~/.ssh/config
-
-# 配置git 的个人信息
- - git config --global user.name 'zhouzhou'
- - git config --global user.email 895817341@qq.com
-
-# 执行install
-install:
- - npm install
-
-# 执行命令脚本
-#script:
 
