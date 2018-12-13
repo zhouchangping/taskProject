@@ -31,3 +31,6 @@ install:
 script:
 - node ./tests/rizeTest.js
 
+addons:
+  ssh_known_hosts: 119.29.6.254
+
