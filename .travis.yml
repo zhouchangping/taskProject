@@ -1,7 +1,4 @@
-# 使用的语言
 language: node_js
-
-# 使用的nodejs版本
 node_js:
 - '8'
 branchs:
@@ -11,8 +8,4 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_0d9a59502154_key -iv $encrypted_0d9a59502154_iv
   -in id_rsa.enc -out id_rsa -d
 
-# 改变文件权限
- - chmod 600 ~/.ssh/id_rsa
-
-
-
+  - chmod 600 ~/.ssh/id_rsa
