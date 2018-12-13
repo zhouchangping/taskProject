@@ -24,13 +24,13 @@ before_install:
  #- git config --global user.email 895817341@qq.com
 
 # 执行install
-install:
- - npm install
+# install:
+#  - npm install
 
-# 执行命令脚本
-script:
-- node ./tests/rizeTest.js
+# # 执行命令脚本
+# script:
+# - node ./tests/rizeTest.js
 
-addons:
-  ssh_known_hosts: 119.29.6.254
+# addons:
+#   ssh_known_hosts: 119.29.6.254
 
