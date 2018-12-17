@@ -1,62 +1,59 @@
+//1.简单 快
+//2.webpack 前端打包工具 
 const gulp = require("gulp");
-const babel = require('gulp-babel');
+const babel = require("gulp-babel");
 const watch = require('gulp-watch');
-const watch = require('gulp-rollup');
-// 开发环境
-gulp.task('builddev', () => {
-    return watch('src/nodeui/**/*.js', function () {
-    	gulp.src('src/nodeui/**/*.js.js')
-        .pipe(babel({
-        	babelrc: false, // 防止外部babelrc冲突
-        	ignore: ["./src/nodeui/config/*.js"],
-            "plugins": ['babel-plugin-transform-es2015-modules-commonjs']
-        }))
-        .pipe(gulp.dest('dist'))
+const rollup = require('gulp-rollup');
+const replace = require('rollup-plugin-replace'); // 替换config 下的config.js多余
+const entry = 'src/nodeuii/**/*.js';
+//并行工具gulp-sequence
+//开发环境
+function builddev() {
+    return watch(entry, {
+        ignoreInitial: false
+    }, function () {
+        gulp.src(entry)
+            .pipe(babel({
+                babelrc: false,
+                "plugins": ["transform-es2015-modules-commonjs"]
+            }))
+            .pipe(gulp.dest('dist'))
     });
-});
+}
 
-// 配置文件清理
-gulp.task('buildConfig', function() {
-  gulp.src('src/nodeui/**/*.js')
-    // transform the files here.
-    .pipe(rollup({ // 入口文件，不用webpack打包node文件，node文件都是平行的。
-      // any option supported by Rollup can be set here.
-      input: './src/nodeui/config/*.js',
-      output: {
-      	format: "cjs",
-      }
-    }))
-    .pipe(gulp.dest('./dist'));
-});
-
-
-// 上线环境
-gulp.task('buildprod', function () {
-	return watch('src/nodeui/**/*.js', function () {
-    	gulp.src('src/nodeui/**/*.js.js')
+//上线环境
+function buildprod() {
+    return gulp.src(entry)
         .pipe(babel({
-        	babelrc: false, // 防止外部babelrc冲突,不去抓取外部js
-        	ignore: ["./src/nodeui/config/*.js"],
-            "plugins": ['babel-plugin-transform-es2015-modules-commonjs']
+            babelrc: false,
+            ignore: ["./src/nodeuii/config/*.js"],
+            "plugins": ["transform-es2015-modules-commonjs"]
         }))
-        .pipe(gulp.dest('dist'))
-    });
-})；
+        .pipe(gulp.dest('dist'));
+}
 
-gulp.task("lint", function () {
-
-});
-
-let _task = ["builddev"];
-
+// 配置文件
+function buildconfig() {
+    return gulp.src(entry)
+        .pipe(rollup({
+            output: {
+                format: "cjs"
+            },
+            input: "./src/nodeuii/config/index.js",
+            plugins: [
+                replace({
+                    "process.env.NODE_ENV": JSON.stringify('production')
+                })
+            ]
+        }))
+        .pipe(gulp.dest('./dist'));
+}
+let build = gulp.series(builddev);
 if (process.env.NODE_ENV == "production") {
-	_task = ["build"]
+    //这里出现了问题
+    build = gulp.series(buildprod,buildconfig);
 }
-
 if (process.env.NODE_ENV == "lint") {
-	
+    build = gulp.series(buildlint);
 }
-
-
-gulp.task("default", _task);
-
+gulp.task("default", build);

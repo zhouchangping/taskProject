@@ -7,13 +7,11 @@
     "port": 8080
   },
   "scripts": {
-    "test": "echo $npm_package_name",
-    "e2e": "",
-    "pretest": "echo 11",
+    "test": "echo $npm_package_config_port",
     "server:dev": "scripty",
     "server:prod": "scripty",
     "server:lint": "scripty",
-    "dev": "cross-env NODE_ENV=development node ./app.js",
+    "dev": "cross-env NODE_ENV=development supervisor ./dist/app.js",
     "docs": "jsdoc ./**/*.js -d ./docs/jsdocs",
     "build": "babel"
   },
